@@ -1,21 +1,21 @@
-CODE_CHANGES = true
 pipeline {
     agent any
+    parameters {
+        string(name:'NAME', defaultValue:'my-app', description: 'name of the app')
+        choice(name:'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: 'version of the app')
+        booleanParam(name:'executeTests', defaultValue: true, description: 'check to execute tests')
+    }
     stages {
         stage('build') {
-            when {
-                expression {
-                    BRANCH_NAME == 'master' && CODE_CHANGES == true
-                }
-            }
             steps {
                 echo 'building the application...'
+                echo "built the ${NAME} app"
             }
         }
         stage('test') {
             when {
                 expression {
-                    BRANCH_NAME == 'development'
+                    params.executeTests
                 }
             }
             steps {
@@ -25,6 +25,7 @@ pipeline {
         stage('deploy') {
             steps {
                 echo 'deploying the application...'
+                echo "deployed version ${params.VERSION}"
             }
         }
     }
