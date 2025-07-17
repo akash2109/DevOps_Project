@@ -1,4 +1,4 @@
-CODE_CHANGES = true
+CODE_CHANGES = false
 pipeline {
     agent any
     stages {
