@@ -4,6 +4,7 @@ import com.crud.entity.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -33,5 +34,11 @@ public class UserDao {
         if (user != null) {
             sessionFactory.getCurrentSession().delete(user);
         }
+    }
+
+    public User findByEmail(String email) {
+        Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where email = :email", User.class);
+        query.setParameter("email", email);
+        return query.uniqueResult();
     }
 }

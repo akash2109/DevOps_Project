@@ -53,4 +53,9 @@ public class UserController {
         model.addAttribute("users", userService.list());
         return "list-users";
     }
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
+    }
 }

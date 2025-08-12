@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<html lang="en">
 <head>
     <title>User List</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
@@ -8,6 +9,13 @@
 <body>
     <h1>User List</h1>
     <a href="${pageContext.request.contextPath}/add">Add User</a>
+
+    <security:authorize access="isAuthenticated()">
+        <p>Welcome, <security:authentication property='principal.username' />!</p>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <input type="submit" value="Logout"/>
+        </form>
+    </security:authorize>
     <table>
         <thead>
             <tr>
