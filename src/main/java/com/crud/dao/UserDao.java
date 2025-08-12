@@ -41,4 +41,10 @@ public class UserDao {
         query.setParameter("email", email);
         return query.uniqueResult();
     }
+
+    public User getUserByUsername(String username) {
+        Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where username = :username", User.class);
+        query.setParameter("username", username);
+        return query.uniqueResult();
+    }
 }
